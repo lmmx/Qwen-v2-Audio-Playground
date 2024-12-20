@@ -1,0 +1,16 @@
+[project]
+name = "qwen-audio-playground"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "accelerate>=0.26.0",
+    "bitsandbytes>=0.45.0",
+    "librosa>=0.10.0",
+    "einops>=0.8.0",
+    "matplotlib>=3.10.0",
+    "tiktoken>=0.8.0",
+    "transformers-stream-generator>=0.0.5",
+    "transformers>=4.47.1",
+]
