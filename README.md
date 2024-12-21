@@ -42,7 +42,7 @@ The dimensionality of the result here is 1280 which comes from the value of `d_m
 > - encoder_ffn_dim (`int`, *optional*, defaults to 5120):   
 >      Dimensionality of the "intermediate" (often named feed-forward) layer in encoder.   
 > - encoder_layerdrop (`float`, *optional*, defaults to 0.0):  
->      The LayerDrop probability for the encoder. See the [LayerDrop paper](see https://arxiv.org/abs/1909.11556)  
+>      The LayerDrop probability for the encoder. See the [LayerDrop paper](https://arxiv.org/abs/1909.11556)  
 >      for more details.  
 > - d_model (`int`, *optional*, defaults to 1280):  
 >      Dimensionality of the layers.  
