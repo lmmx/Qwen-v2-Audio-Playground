@@ -29,6 +29,44 @@ It is also pooled with a stride of 2 (i.e. every other window gets dropped), hal
 
 The embeddings could also be extracted before they get aligned with the text space (if this is not of use)
 
+The dimensionality of the result here is 1280 which comes from the value of `d_model` in the
+[config](https://github.com/huggingface/transformers/blob/main/src/transformers/models/qwen2_audio/configuration_qwen2_audio.py)
+
+> num_mel_bins (`int`, *optional*, defaults to 128):
+>     Number of mel features used per input features. Should correspond to the value used in the
+>     `Qwen2AudioProcessor` class.
+> encoder_layers (`int`, *optional*, defaults to 32):
+>     Number of encoder layers.
+> encoder_attention_heads (`int`, *optional*, defaults to 20):
+>     Number of attention heads for each attention layer in the Transformer encoder.
+> encoder_ffn_dim (`int`, *optional*, defaults to 5120):
+>     Dimensionality of the "intermediate" (often named feed-forward) layer in encoder.
+> encoder_layerdrop (`float`, *optional*, defaults to 0.0):
+>     The LayerDrop probability for the encoder. See the [LayerDrop paper](see https://arxiv.org/abs/1909.11556)
+>     for more details.
+> d_model (`int`, *optional*, defaults to 1280):
+>     Dimensionality of the layers.
+> dropout (`float`, *optional*, defaults to 0.0):
+>     The dropout probability for all fully connected layers in the embeddings, encoder, and pooler.
+> attention_dropout (`float`, *optional*, defaults to 0.0):
+>     The dropout ratio for the attention probabilities.
+> activation_function (`str`, *optional*, defaults to `"gelu"`):
+>     The non-linear activation function (function or string) in the encoder and pooler. If string, `"gelu"`,
+>     `"relu"`, `"silu"` and `"gelu_new"` are supported.
+> activation_dropout (`float`, *optional*, defaults to 0.0):
+>     The dropout ratio for activations inside the fully connected layer.
+> scale_embedding (`bool`, *optional*, defaults to `False`):
+>     Scale embeddings by diving by sqrt(d_model).
+> init_std (`float`, *optional*, defaults to 0.02):
+>     The standard deviation of the truncated_normal_initializer for initializing all weight matrices.
+> max_source_positions (`int`, *optional*, defaults to 1500):
+>     The maximum sequence length of log-mel filter-bank features that this model might ever be used with.
+
+> Download took 0.95 seconds
+> Load took 1.26 seconds
+> Encode took 5.11 seconds
+> Encoded features shape: torch.Size([1, 750, 1280])
+
 ## Post-audio encoding Qwen LM encoding
 
 The file `src/no_decode.py` interferes with the demo by accessing hidden states, to investigate what
