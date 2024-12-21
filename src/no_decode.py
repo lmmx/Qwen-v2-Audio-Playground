@@ -4,7 +4,9 @@ from urllib.request import urlopen
 import librosa
 from transformers import AutoProcessor, Qwen2AudioForConditionalGeneration
 
-model = Qwen2AudioForConditionalGeneration.from_pretrained("Qwen/Qwen2-Audio-7B")
+model = Qwen2AudioForConditionalGeneration.from_pretrained(
+    "Qwen/Qwen2-Audio-7B", output_hidden_states=True, return_dict_in_generate=True
+)
 processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B", trust_remote_code=True)
 
 prompt = "<|audio_bos|><|AUDIO|><|audio_eos|>Describe the music:"
@@ -16,7 +18,8 @@ audio, sr = librosa.load(
 inputs = processor(text=prompt, audios=audio, return_tensors="pt", sampling_rate=sr)
 
 generated = model.generate(**inputs, max_length=256)
-generated_ids = generated[:, inputs.input_ids.size(1) :]
+# Slice out the audio tokens (comes after the prompt)
+generated_ids = generated.sequences[:, inputs.input_ids.size(1) :]
 response = processor.batch_decode(
     generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
 )[0]

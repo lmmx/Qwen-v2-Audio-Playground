@@ -26,11 +26,11 @@ model = Qwen2AudioEncoder.from_pretrained("Qwen/Qwen2-Audio-7B")
 processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B", trust_remote_code=True)
 
 prompt = "<|audio_bos|><|AUDIO|><|audio_eos|>"
-url = "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-Audio/glass-breaking-151256.mp3"
+# url = "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-Audio/glass-breaking-151256.mp3"
+url = "https://github.com/drichert/touchy/raw/refs/heads/master/media/Sundown.mp3"
 
 with Timer("Download") as bt:
     buf = BytesIO(urlopen(url).read())
-
 
 with Timer("Load") as lt:
     audio, sr = librosa.load(buf, sr=processor.feature_extractor.sampling_rate)
