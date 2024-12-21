@@ -20,6 +20,8 @@
 
   > each frame of the encoder output approximately corresponds to a 40ms segment of the original audio signal
 
+- Note: encoding is faster on GPU (it involves Conv1D and Transformer layers)
+
 There is an audio feature extractor (in the sense of audio features, not learnt features) which
 involves resampling to 16 kHz and preparing a mel-spectrogram from the raw waveform
 
