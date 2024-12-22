@@ -69,6 +69,15 @@ The dimensionality of the result here is 1280 which comes from the value of `d_m
 > - Encode took 5.11 seconds
 > - Encoded features shape: torch.Size([1, 750, 1280])
 
+This is done for any files in the `data` directory in `src/qwenmas.py` with notable speedup:
+
+```
+Load took 1.24 seconds
+Encode took 0.44 seconds
+Processed youtube_yXQViqx6GMY_audio
+Encoded features shape: torch.Size([1, 750, 1280])
+```
+
 ## Post-audio encoding Qwen LM encoding
 
 The file `src/no_decode.py` interferes with the demo by accessing hidden states, to investigate what

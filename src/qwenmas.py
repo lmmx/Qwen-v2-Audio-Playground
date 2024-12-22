@@ -23,10 +23,8 @@ class Timer:
 
 
 # Use Qwen2AudioEncoder instead of Qwen2AudioForConditionalGeneration
-model = Qwen2AudioEncoder.from_pretrained("Qwen/Qwen2-Audio-7B", device_map="cuda")
-processor = AutoProcessor.from_pretrained(
-    "Qwen/Qwen2-Audio-7B", device_map="cuda", trust_remote_code=True
-)
+model = Qwen2AudioEncoder.from_pretrained("Qwen/Qwen2-Audio-7B").cuda()
+processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B", trust_remote_code=True)
 
 prompt = "<|audio_bos|><|AUDIO|><|audio_eos|>"
 # url = "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-Audio/glass-breaking-151256.mp3"
@@ -37,7 +35,8 @@ embs_path.mkdir(exist_ok=True)
 
 for file in data_path.iterdir():
     filename = file.stem
-    if file.suffix == ".mp3" and filename not in embs_path.iterdir():
+    enc_emb = embs_path / f"{filename}.pt"
+    if file.suffix == ".mp3" and not enc_emb.exists():
         buf = BytesIO(file.read_bytes())
     else:
         continue
@@ -52,6 +51,10 @@ for file in data_path.iterdir():
         encoder_outputs = model(encoded_features)
 
     final_encoded_features = encoder_outputs.last_hidden_state
+    if final_encoded_features.isnan().all():
+        raise ValueError(f"Error: NaN in the result for {filename}")
+    else:
+        torch.save(final_encoded_features.cpu(), enc_emb)
 
     print(f"Processed {filename}")
     print(f"Encoded features shape: {final_encoded_features.shape}")
