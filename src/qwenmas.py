@@ -27,8 +27,6 @@ model = Qwen2AudioEncoder.from_pretrained("Qwen/Qwen2-Audio-7B").cuda()
 processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B", trust_remote_code=True)
 
 prompt = "<|audio_bos|><|AUDIO|><|audio_eos|>"
-# url = "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-Audio/glass-breaking-151256.mp3"
-url = "https://github.com/drichert/touchy/raw/refs/heads/master/media/Sundown.mp3"
 data_path = Path(__file__).parents[1] / "data"
 embs_path = data_path / "embs"
 embs_path.mkdir(exist_ok=True)
@@ -54,7 +52,12 @@ for file in data_path.iterdir():
     if final_encoded_features.isnan().all():
         raise ValueError(f"Error: NaN in the result for {filename}")
     else:
-        torch.save(final_encoded_features.cpu(), enc_emb)
+        save_data = {
+            "inputs": inputs,
+            "encoded_outputs": final_encoded_features.cpu(),
+        }
+        torch.save(save_data, enc_emb)
 
     print(f"Processed {filename}")
-    print(f"Encoded features shape: {final_encoded_features.shape}")
+    # print(f"Encoded features shape: {final_encoded_features.shape}")
+    # Always [1, 750, 1280]

@@ -34,6 +34,8 @@ The embeddings could also be extracted before they get aligned with the text spa
 The dimensionality of the result here is 1280 which comes from the value of `d_model` in the
 [config](https://github.com/huggingface/transformers/blob/main/src/transformers/models/qwen2_audio/configuration_qwen2_audio.py)
 
+<details><summary>Click to show the config</summary>
+
 > - num_mel_bins (`int`, *optional*, defaults to 128):    
 >      Number of mel features used per input features. Should correspond to the value used in the   
 >      `Qwen2AudioProcessor` class.   
@@ -64,6 +66,9 @@ The dimensionality of the result here is 1280 which comes from the value of `d_m
 > - max_source_positions (`int`, *optional*, defaults to 1500):  
 >      The maximum sequence length of log-mel filter-bank features that this model might ever be used with.  
 
+
+</details>
+
 > - Download took 0.95 seconds
 > - Load took 1.26 seconds
 > - Encode took 5.11 seconds
@@ -77,6 +82,16 @@ Encode took 0.44 seconds
 Processed youtube_yXQViqx6GMY_audio
 Encoded features shape: torch.Size([1, 750, 1280])
 ```
+
+## Encoder Jupyter Lab exploration
+
+Jupyter is not hardcoded as a dependency, but can be used with the environment thanks to `uv run --with`:
+
+```sh
+uv run --with jupyter jupyter lab
+```
+
+A notebook exploring the inputs and encoded embeddings is included at `src/enc_explorer.ipynb`.
 
 ## Post-audio encoding Qwen LM encoding
 
