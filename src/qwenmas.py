@@ -28,16 +28,25 @@ processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B", trust_remote_co
 
 prompt = "<|audio_bos|><|AUDIO|><|audio_eos|>"
 data_path = Path(__file__).parents[1] / "data"
+sep_path = data_path / "split"
 embs_path = data_path / "embs"
+embs_path_split = data_path / "embs"
 embs_path.mkdir(exist_ok=True)
+embs_path_split.mkdir(exist_ok=True)
 
-for file in data_path.iterdir():
+
+def encode_file(file, split: bool = False):
     filename = file.stem
+    if split:
+        filename = f"{file.parent.stem}_separated_{filename}"
     enc_emb = embs_path / f"{filename}.pt"
-    if file.suffix == ".mp3" and not enc_emb.exists():
-        buf = BytesIO(file.read_bytes())
+    if file.suffix == ".mp3":
+        if not enc_emb.exists():
+            buf = BytesIO(file.read_bytes())
+        else:
+            return
     else:
-        continue
+        return
 
     with Timer("Load") as lt:
         audio, sr = librosa.load(buf, sr=processor.feature_extractor.sampling_rate)
@@ -61,3 +70,11 @@ for file in data_path.iterdir():
     print(f"Processed {filename}")
     # print(f"Encoded features shape: {final_encoded_features.shape}")
     # Always [1, 750, 1280]
+    return
+
+
+for file in data_path.iterdir():
+    encode_file(file)
+
+for file in sep_path.glob("*/*.mp3"):
+    encode_file(file, split=True)
