@@ -83,6 +83,12 @@ Processed youtube_yXQViqx6GMY_audio
 Encoded features shape: torch.Size([1, 750, 1280])
 ```
 
+- **Edit** - this got duplicated and the more recent one is `qwenmas_proj.py` which produces
+  embeddings from the multimodal projector layer. Run this one if you want to recreate the data
+files used in the `proj_explorer.ipynb` notebook and `umap_viz.ipynb` notebook which looks at their
+structure in 4096D embedding space (spoiler: not much that can be drawn from them besides being very
+distinct from the token embedding space).
+
 ## Encoder Jupyter Lab exploration
 
 Jupyter is not hardcoded as a dependency, but can be used with the environment thanks to `uv run --with`:
